@@ -1,7 +1,8 @@
 
 "author:	yuchao86@gmail.com
 " date : 2012-08-17
-
+set fileencodings=utf-8,gbk,utf-16
+set number
 set nocompatible
 source $VIMRUNTIME/vimrc_example.vim
 source $VIMRUNTIME/mswin.vim
@@ -36,7 +37,8 @@ au BufReadPost * if line("'\"") > 0|if line("'\"") <= line("$")|exe("norm '\"")|
 
 filetype plugin on
 
-au FileType php setlocal dict+=D:\Vim\vimfiles\doc\php_funclist.txt
+au FileType php setlocal dict+=~/.vim/doc/php_funclist.txt
+"au FileType c setlocal dict+=~/.vim/doc/c_funclist.txt
 
 if !exists('g:AutoComplPop_Behavior')
     let g:AutoComplPop_Behavior = {}
@@ -67,4 +69,47 @@ nmap <silent> <leader>ll :LUBufs<cr>
 nmap <silent> <leader>lw :LUWalk<cr>
 
 
-"set autochdir
+set autochdir
+"call pathogen:infect()
+" 在打开文件的时候检查
+ let g:syntastic_check_on_open=1
+" "phpcs，tab4个空格，编码参考使用CodeIgniter风格
+ let g:syntastic_phpcs_conf = "--tab-width=4 --standard=CodeIgniter"
+
+let makeprg = "php -l -d error_reporting=E_ALL -d display_errors=1 -d error_log='' ".shellescape(expand('%')) 
+
+let Tlist_Use_Right_Window=1
+let Tlist_File_Fold_Auto_Close=1
+
+call pathogen#runtime_append_all_bundles()
+call pathogen#infect()
+call pathogen#helptags()
+
+
+let g:user_zen_settings = {
+  \  'indentation' : '  ',
+  \  'perl' : {
+  \    'aliases' : {
+  \      'req' : 'require '
+  \    },
+  \    'snippets' : {
+  \      'use' : "use strict\nuse warnings\n\n",
+  \      'warn' : "warn \"|\";",
+  \    }
+  \  }
+  \}
+
+let g:user_zen_expandabbr_key = '<c-e>'
+
+let g:use_zen_complete_tag = 1
+
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+
+let g:syntastic_check_on_open=1
+let g:syntastic_enable_highlighting = 1 
+let g:syntastic_auto_jump=1
+let g:syntastic_stl_format = '[%E{Err: %fe #%e}%B{, }%W{Warn: %fw #%w}]'
+
