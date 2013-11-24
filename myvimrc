@@ -44,7 +44,7 @@ if !exists('g:AutoComplPop_Behavior')
     let g:AutoComplPop_Behavior = {}
     let g:AutoComplPop_Behavior['php'] = []
     call add(g:AutoComplPop_Behavior['php'], {
-            \   'command'   : "\<C-x>\<C-o>", 
+            \   'command'   : "\<C-x>\<C-o>",
             \   'pattern'   : printf('\(->\|::\|\$\)\k\{%d,}$', 0),
             \   'repeat'    : 0,
             \})
@@ -76,7 +76,7 @@ set autochdir
 " "phpcs，tab4个空格，编码参考使用CodeIgniter风格
  let g:syntastic_phpcs_conf = "--tab-width=4 --standard=CodeIgniter"
 
-let makeprg = "php -l -d error_reporting=E_ALL -d display_errors=1 -d error_log='' ".shellescape(expand('%')) 
+let makeprg = "php -l -d error_reporting=E_ALL -d display_errors=1 -d error_log='' ".shellescape(expand('%'))
 
 let Tlist_Use_Right_Window=1
 let Tlist_File_Fold_Auto_Close=1
@@ -109,7 +109,20 @@ set statusline+=%*
 
 
 let g:syntastic_check_on_open=1
-let g:syntastic_enable_highlighting = 1 
+let g:syntastic_enable_highlighting = 1
 let g:syntastic_auto_jump=1
 let g:syntastic_stl_format = '[%E{Err: %fe #%e}%B{, }%W{Warn: %fw #%w}]'
+
+ "powerline{
+  set guifont=Powerline
+  set nocompatible
+  set t_Co=256
+  let g:Powerline_symbols = 'fancy'
+ "}
+
+
+ let g:neocomplcache_enable_at_startup=1
+ inoremap <expr><TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
+
+
 

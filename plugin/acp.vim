@@ -160,9 +160,9 @@ command! -bar -narg=0 AutoComplPopDisable AcpDisable
 command! -bar -narg=0 AutoComplPopLock    AcpLock
 command! -bar -narg=0 AutoComplPopUnlock  AcpUnlock
 "-----------------------------------------------------------------------------
-if g:acp_enableAtStartup
-  AcpEnable
-endif
+"if g:acp_enableAtStartup
+"  AcpEnable
+"endif
 "-----------------------------------------------------------------------------
 
 " }}}1
