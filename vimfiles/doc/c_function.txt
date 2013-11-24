@@ -1,6 +1,0 @@
-abs
-acos
-acosh
-addcslashes
-addslashes
-aggregate
