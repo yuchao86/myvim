@@ -21,3 +21,15 @@ open your vimrc file and run command
 **Licence:**
 
 Do What The Fuck You Want To Public License ([WTFPL](http://www.wtfpl.net/)).
+安装说明：
+第一步：先克隆版本
+cd ~
+git clone https://github.com/yuchao86/myvim.git
+第二步：更新插件程序
+cd myvim/vimfiles
+./update.sh
+第三步：建软连接
+cd ../../
+ln -s myvim/vimfiles .vim
+ln -s myvim/_vimrc .vimrc
+第四部：重启vim
