@@ -1,6 +1,20 @@
 
 "author:	yuchao86@gmail.com
 " date : 2012-08-17
+
+"åŸºæœ¬é…ç½®
+set smartindent
+set tabstop=4
+set shiftwidth=4
+set expandtab
+
+"è®¾ç½®æŠ˜å æ ·å¼
+set foldmethod=indent
+"è®¾ç½®é¢œè‰²ä¸ºdesertæ¨¡å¼
+colorscheme desert
+"é«˜äº®å½“å‰è¡Œ
+set cul
+
 set fileencodings=utf-8,gbk,utf-16
 set number
 set nocompatible
@@ -53,27 +67,27 @@ endif
 """"""""""""""""""""""""""""""
 " lookupfile setting
 """"""""""""""""""""""""""""""
-let g:LookupFile_MinPatLength = 2               "×îÉÙÊäÈë2¸ö×Ö·û²Å¿ªÊ¼²éÕÒ
-let g:LookupFile_PreserveLastPattern = 0        "²»±£´æÉÏ´Î²éÕÒµÄ×Ö·û´®
-let g:LookupFile_PreservePatternHistory = 1     "±£´æ²éÕÒÀúÊ·
-let g:LookupFile_AlwaysAcceptFirst = 1          "»Ø³µ´ò¿ªµÚÒ»¸öÆ¥ÅäÏîÄ¿
-let g:LookupFile_AllowNewFiles = 0              "²»ÔÊĞí´´½¨²»´æÔÚµÄÎÄ¼ş
-if filereadable("./filenametags")                "ÉèÖÃtagÎÄ¼şµÄÃû×Ö
+let g:LookupFile_MinPatLength = 2               "æœ€å°‘è¾“å…¥2ä¸ªå­—ç¬¦æ‰å¼€å§‹æŸ¥æ‰¾
+let g:LookupFile_PreserveLastPattern = 0        "ä¸ä¿å­˜ä¸Šæ¬¡æŸ¥æ‰¾çš„å­—ç¬¦ä¸²
+let g:LookupFile_PreservePatternHistory = 1     "ä¿å­˜æŸ¥æ‰¾å†å²
+let g:LookupFile_AlwaysAcceptFirst = 1          "å›è½¦æ‰“å¼€ç¬¬ä¸€ä¸ªåŒ¹é…é¡¹ç›®
+let g:LookupFile_AllowNewFiles = 0              "ä¸å…è®¸åˆ›å»ºä¸å­˜åœ¨çš„æ–‡ä»¶
+if filereadable("./filenametags")                "è®¾ç½®tagæ–‡ä»¶çš„åå­—
 let g:LookupFile_TagExpr = '"./filenametags"'
 endif
-"Ó³ÉäLookupFileÎª,lk
+"æ˜ å°„LookupFileä¸º,lk
 nmap <silent> <leader>lk :LUTags<cr>
-"Ó³ÉäLUBufsÎª,ll
+"æ˜ å°„LUBufsä¸º,ll
 nmap <silent> <leader>ll :LUBufs<cr>
-"Ó³ÉäLUWalkÎª,lw
+"æ˜ å°„LUWalkä¸º,lw
 nmap <silent> <leader>lw :LUWalk<cr>
 
 
 set autochdir
 "call pathogen:infect()
-" ÔÚ´ò¿ªÎÄ¼şµÄÊ±ºò¼ì²é
+" åœ¨æ‰“å¼€æ–‡ä»¶çš„æ—¶å€™æ£€æŸ¥
  let g:syntastic_check_on_open=1
-" "phpcs£¬tab4¸ö¿Õ¸ñ£¬±àÂë²Î¿¼Ê¹ÓÃCodeIgniter·ç¸ñ
+" "phpcsï¼Œtab4ä¸ªç©ºæ ¼ï¼Œç¼–ç å‚è€ƒä½¿ç”¨CodeIgniteré£æ ¼
  let g:syntastic_phpcs_conf = "--tab-width=4 --standard=CodeIgniter"
 
 let makeprg = "php -l -d error_reporting=E_ALL -d display_errors=1 -d error_log='' ".shellescape(expand('%')) 
@@ -81,9 +95,9 @@ let makeprg = "php -l -d error_reporting=E_ALL -d display_errors=1 -d error_log=
 let Tlist_Use_Right_Window=1
 let Tlist_File_Fold_Auto_Close=1
 
-call pathogen#runtime_append_all_bundles()
-call pathogen#infect()
-call pathogen#helptags()
+"call pathogen#runtime_append_all_bundles()
+"call pathogen#infect()
+"call pathogen#helptags()
 
 
 let g:user_zen_settings = {
@@ -113,3 +127,73 @@ let g:syntastic_enable_highlighting = 1
 let g:syntastic_auto_jump=1
 let g:syntastic_stl_format = '[%E{Err: %fe #%e}%B{, }%W{Warn: %fw #%w}]'
 
+setlocal omnifunc=javacomplete#Complete
+autocmd FileType java set omnifunc=javacomplete#Complete
+autocmd FileType java set completefunc=javacomplete#CompleteParamsInf
+autocmd FileType java inoremap <expr><CR> pumvisible()?"\<C-Y>":"<CR>"
+
+
+function! RemovePairs()
+    let l:line = getline(".")
+    let l:previous_char = l:line[col(".")-1] "get the location previous char
+
+    if index(["(","[","{"], l:previous_char) != -1
+        let l:original_pos = getpos(".")
+        execute "normal %"
+        let l:new_pos = getpos(".")
+
+        if l:original_pos == l:new_pos
+            execute "normal! a\<BS>"
+            return
+        end
+
+        let l:line2 = getline(".")
+        if len(l:line2) == col(".")
+            execute "normal! v%xa"
+        else
+            execute "normal! v%xi"
+        end
+     else
+         execute "normal! a\<BS>"
+     end
+endfunction
+
+function! RemoveNextDoubleChar(char)
+    let l:line = getline(".")
+    let l:next_char = l:line[col(".")]
+
+    if a:char == l:next_char
+        execute "normal! l"
+    else
+        execute "normal! i" . a:char . ""
+    end
+ endfunction
+
+
+imap { {}<ESC>i<CR><ESC>V<O
+imap ( ()<ESC>i
+
+inoremap <BS> <ESC>:call RemovePairs()<CR>a
+"inoremap ) <ESC>:call RemoveNextDoubleChar(')')<CR>a
+"inoremap ] <ESC>:call RemoveNextDoubleChar(']')<CR>a
+"inoremap } <ESC>:call RemoveNextDoubleChar('}')<CR>a
+
+" PHP è‡ªåŠ¨å®Œæˆ
+" è®¾ç½®è‡ªåŠ¨å®Œæˆçš„ç›‘å¬æ–¹å¼ï¼šå°¾éƒ¨æ·»åŠ ä¸€ä¸ªå­—æ¯å’Œæ¸…é™¤ä¸€ä¸ªå­—æ¯
+set complete-=k complete+=k
+" è®¾ç½®å­—å…¸è¡¥å…¨æ–‡ä»¶
+set dictionary=~/.vim/doc/php_funclist.txt
+set dictionary=~/.vim/doc/c_funclist.txt
+
+" ä½¿ç”¨ tab é”®è‡ªåŠ¨å®Œæˆæˆ–å°è¯•è‡ªåŠ¨å®Œæˆ
+function! InsertTabWrapper()
+    let col=col('.')-1
+    if !col || getline('.')[col-1] !~ '\k'
+        return "\<TAB>"
+    else
+        return "\<C-N>"
+    endif
+endfunction
+
+" é‡æ–°æ˜ å°„ tab é”®åˆ° InsertTabWrapper å‡½æ•°
+inoremap <TAB> <C-R>=InsertTabWrapper()<CR>
